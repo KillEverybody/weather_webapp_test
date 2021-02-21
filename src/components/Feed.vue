@@ -69,70 +69,68 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.feed {
-    min-height: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #4d555d;
-    color: #fefefe;
-    @media (min-height: 850px) {
-        min-height: 75%;
-    }
-}
-.feed__main {
-    padding: 25px 40px 50px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    flex: 1 1 auto;
-}
-.main__item-temp {
-    display: block;
-    font-size: 70px;
-    margin-bottom: 15px;
-    font-weight: 100;
-}
-.main__item-city {
-    display: block;
-    font-size: 32px;
-    font-weight: 400;
-}
-.main__item-weather-block {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.main__item-weather-block-weather {
-}
-.main__item-weather-block-img {
-    height: 60px;
-    width: 60px;
-}
-.feed__upper {
-    box-sizing: border-box;
-    background-color: #39424b;
-    width: 100%;
-    min-height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
+<style scoped lang="sass">
+.feed
+    min-height: 70%
+    display: flex
+    flex-direction: column
+    align-items: center
+    background-color: #4d555d
+    color: #fefefe
+    @media (min-height: 850px)
+        min-height: 75%
 
-}
-.upper__right-item-min {
-    margin-left: 5px;
-    color: #babcc0;
-}
 
-.feed__bottom {
-    background-color: #39424b;
-    margin-top: auto;
-    width: 100%;
-    padding: 5px 0 5px 20px;
-}
+.feed__main
+    padding: 25px 40px 50px
+    text-align: center
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    width: 100%
+    flex: 1 1 auto
+
+.main__item-temp
+    display: block
+    font-size: 70px
+    margin-bottom: 15px
+    font-weight: 100
+
+.main__item-city
+    display: block
+    font-size: 32px
+    font-weight: 400
+
+.main__item-weather-block
+    display: flex
+    align-items: center
+    justify-content: center
+
+.main__item-weather-block-img
+    height: 60px
+    width: 60px
+
+.feed__upper
+    box-sizing: border-box
+    background-color: #39424b
+    width: 100%
+    min-height: 35px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0 10px
+
+
+.upper__right-item-min
+    margin-left: 5px
+    color: #babcc0
+
+
+.feed__bottom
+    background-color: #39424b
+    margin-top: auto
+    width: 100%
+    padding: 5px 0 5px 20px
+
 </style>

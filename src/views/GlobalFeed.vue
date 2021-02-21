@@ -84,22 +84,22 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.container {
-    overflow: hidden;
-    font-family: 'Roboto', sans-serif;
-    max-width: 414px;
-    margin: 0 auto;
-    font-weight: 300;
-    background-color: #4d555d;
-    min-height: 568px;
-    height: 100vh;
-  display: flex;
-  flex-direction: column;
+<style lang='sass'>
+.container
+  overflow: hidden
+  font-family: 'Roboto', sans-serif
+  max-width: 414px
+  margin: 0 auto
+  font-weight: 300
+  background-color: #4d555d
+  min-height: 568px
+  height: 100vh
+  display: flex
+  flex-direction: column
 
-    @media (min-height: 850px) {
-        margin-top: 100px;
-        height: 70vh;
-    }
-}
+  @media (min-height: 850px)
+    margin-top: 100px
+    height: 70vh
+
+
 </style>

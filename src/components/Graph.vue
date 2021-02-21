@@ -29,39 +29,39 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
-.graph {
-  display: flex;
-  align-items: flex-end;
-  height: 100%;
-  width: 100%;
-}
+<style scoped lang='sass'>
+.graph
+  display: flex
+  align-items: flex-end
+  height: 100%
+  width: 100%
 
-.graph__item {
-  &:nth-child(odd) {
-    background-color: rgba(250, 190, 88, 0.6);
-    height: 100%;
-    width: 50%;
-    &:after {
-      content: ' ';
-      display: block;
-      width: 100%;
-      height: 3px;
-      background-color: rgba(248, 148, 6, 1);
-    }
-  }
-  &:nth-child(even) {
-    background-color: rgba(30, 139, 195, 0.6);
-    height: 40%;
-    width: 50%;
 
-    &:after {
-      content: ' ';
-      display: block;
-      width: 100%;
-      height: 3px;
-      background-color: rgba(25, 181, 254, 1);
-    }
-  }
-}
+.graph__item
+  &:nth-child(odd)
+    background-color: rgba(250, 190, 88, 0.6)
+    height: 100%
+    width: 50%
+    &:after
+      content: ' '
+      display: block
+      width: 100%
+      height: 3px
+      background-color: rgba(248, 148, 6, 1)
+
+
+  &:nth-child(even)
+    background-color: rgba(30, 139, 195, 0.6)
+    height: 40%
+    width: 50%
+
+    &:after
+      content: ' '
+      display: block
+      width: 100%
+      height: 3px
+      background-color: rgba(25, 181, 254, 1)
+
+
+
 </style>
