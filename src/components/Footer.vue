@@ -1,51 +1,46 @@
 <template>
+  <div class='chart__wrapper'>
   <div class='chart'>
     <div class='chart__item' v-for='(item, idx) in weather' :key='idx'>
       <div class='foo-baz'>
       <div class='chart__item-day'> {{ item.date | date }}</div>
-<!--      <img class='chart__item-img' :src='sun' alt=''>-->
         <wtp-img-weather :weather-img='item.weatherIcon' class='chart__item-img' />
       <div>
         <span class='chart__item-temp-max'>{{ item.dayMax }}</span>
         <span class='chart__item-temp-min'>{{ item.dayMin }}</span>
       </div>
       </div>
-      <div class='chart__item-chart'>
-        <div class='chart__graph'>
-          <wtp-graph :left-data='item.dayMax' :right-data='item.dayMin'/>
-        </div>
-      </div>
     </div>
 
-
+  </div>
+  <div class='chart__item-chart'>
+      <wtp-graph :graph='createArray' />
+  </div>
   </div>
 </template>
 
 <script>
-import sun from '@/assets/sun.svg'
 import WtpGraph from '@/components/Graph'
 import WtpImgWeather from '@/components/ImgWeather'
 
 export default {
   name: 'WtpFooter',
   components: {WtpImgWeather, WtpGraph},
-  data() {
-    return {
-      sun
-    }
-  },
   props: {
-    // tempMin: {
-    //   required: false
-    // },
-    // tempMax: {
-    //   required: false
-    // },
     weather: {
       required: true
     }
   },
-  methods: {}
+    computed: {
+      createArray() {
+          const weatherArray = Object.values(this.weather)
+        const filteredArray = []
+         weatherArray.forEach(el => {
+          Array.prototype.push.apply(filteredArray,[el.dayMax, el.dayMin])
+        })
+            return filteredArray
+      }
+    }
 }
 </script>
 
@@ -53,23 +48,9 @@ export default {
 .chart {
   background-color: #4d555d;
   display: flex;
-  //align-items: flex-start;
-
-  //justify-content: space-between;
-  //align-items: center;
   color: #fefefe;
-  height: 20%;
-
-  //@media (min-height: 850px) {
-  //  height: 65vh;
-  //}
-  //@media (min-height: 950px) {
-  //  height: 66vh;
-  //}
-  //@media (min-height: 1200px) {
-  //  height: 67vh;
-  //}
-
+  height: 50%;
+  align-items: center;
 }
 
 .chart__item {
@@ -80,6 +61,7 @@ export default {
   padding-top: 10px;
   width: 14%;
   margin-right: 5px;
+
   &:nth-child(1) {
     margin-left: 5px;
   }
@@ -102,15 +84,7 @@ export default {
     width: 10px;
     height: 10px;
   }
-  .chart__item-chart {
-    height: 40%;
-    display: flex;
-    width: 100%;
-  }
-  .chart__graph {
-    width: 100%;
-    height: 100%;
-  }
+
   .foo-baz{
     display: flex;
     flex-direction: column;
@@ -119,5 +93,18 @@ export default {
     height: 50%;
   }
 }
+.chart__item-chart {
+    height: 40%;
+    display: flex;
+    width: 100%;
+  box-sizing: border-box;
+}
+.chart__wrapper {
+  height: 20%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
+}
 </style>

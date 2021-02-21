@@ -47,7 +47,6 @@ const mutations = {
     [mutationTypes.getCitySuccess](state, payload) {
         state.city = payload.name
         state.coord = payload.coord
-        console.log('dsfdfdf')
     },
     [mutationTypes.getCityFailure]() {
     },

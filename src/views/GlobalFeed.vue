@@ -17,6 +17,7 @@
         </template>
     </div>
 </template>
+
 <script>
 import {
     actionTypes as weatherActionTypes,
@@ -38,39 +39,17 @@ export default {
         WtpTopBar,
         WtpFeed
     },
-    data() {
-        return {
-            clouds: 'Clouds',
-            dd: false
-        }
-    },
     computed: {
         ...mapState({
-            // isGettingLocation: state => state.geolocation.gettingLocation,
             weatherCity: state => state.weather.city
         }),
         ...mapGetters({
             location: geolocationGetterTypes.getterLocation,
             weather: weatherGetterTypes.getWeatherFiltered
-        })
-        // checkLocation() {
-        //   if (this.isGettingLocation) {
-        //     return true
-        //   } else {
-        //     return false
-        //   }
-        // },
-        // foo() {
-        //   if (this.weatherCity === null ) {
-        //     return false
-        //   } else {
-        //     if (this.weather === null) {
-        //       return false
-        //     } else {
-        //       return true
-        //     }
-        //   }
-        // }
+        }),
+      checkCurrentCity() {
+          return this.weatherCity
+      }
     },
     mounted() {
         setTimeout(this.getData, 10)
@@ -81,8 +60,10 @@ export default {
     // fix this watcher cuz 2-3 times render and this fix problem when user is asked for permission to use geodata
     watch: {
         checkLocation() {
-            // this.$store.dispatch(weatherActionTypes.getWeather, {lat: this.location.latitude, lon: this.location.longitude})
             this.getData()
+        },
+        checkCurrentCity() {
+          this.$router.push({name: 'Home', params: {slug: this.weatherCity}})
         }
     },
     methods: {
@@ -102,6 +83,7 @@ export default {
     }
 }
 </script>
+
 <style lang="scss">
 .container {
     overflow: hidden;
@@ -112,6 +94,8 @@ export default {
     background-color: #4d555d;
     min-height: 568px;
     height: 100vh;
+  display: flex;
+  flex-direction: column;
 
     @media (min-height: 850px) {
         margin-top: 100px;

@@ -2,7 +2,7 @@
   <div class='header__wrapper'>
   <header class='header'>
     <span v-if='isSubmitted' @click='onClick' class='header__item'>Done</span>
-    <img class='header__img' :src='dowland' alt='' @click='onClick' v-else>
+    <img class='header__img' :src='download' alt='' @click='onClick' v-else>
     <div class='header__container'>
       <div class='header__container-title'>
         <span v-if='isSubmitted'>Weather forecast</span>
@@ -12,19 +12,19 @@
     </div>
     <img class='header__img' :src='settings' alt='' @click='resetWeather'>
   </header>
-  <wtp-search-menu :is-submitted='isSubmitted'></wtp-search-menu>
+  <wtp-search-menu :is-submitted='isSubmitted' v-if='start'></wtp-search-menu>
   </div>
 </template>
 
 <script>
-import sun from '@/assets/sun.svg'
-import dowland from '@/assets/dowland.svg'
+import download from '@/assets/download.svg'
 import settings from '@/assets/settings.svg'
-import WtpSearchMenu from '@/components/SearchMenu'
+
+const WtpSearchMenu = () => import('@/components/SearchMenu')
 
 export default {
     name: 'WtpTopBar',
-  components: {WtpSearchMenu},
+   components: {WtpSearchMenu },
   props: {
     currentCity: {
       type: String,
@@ -34,9 +34,9 @@ export default {
   data() {
         return {
             isSubmitted: false,
-          sun,
           settings,
-          dowland,
+          download,
+          start: false
         }
     },
   methods: {
@@ -46,6 +46,9 @@ export default {
     resetWeather() {
         this.$emit('onResetWeather')
     }
+  },
+  mounted() {
+      this.start = true
   }
 }
 </script>
