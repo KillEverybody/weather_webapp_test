@@ -1,6 +1,15 @@
 # weather_test-task
 
-## Project setup
+## You need to install Vue-cli 
+### if not installed
+```
+npm install -g @vue/cli @vue/cli-service-global
+# or
+yarn global add @vue/cli @vue/cli-service-global
+```
+
+## Project setup 
+
 ```
 yarn install
 ```
@@ -13,6 +22,12 @@ yarn serve
 ### Compiles and minifies for production
 ```
 yarn build
+```
+### For start build version 
+```
+npm install -g serve
+
+serve -s dist
 ```
 
 ### Lints and fixes files

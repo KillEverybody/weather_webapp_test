@@ -2,7 +2,7 @@
   <div class='menu' :class='{active: isSubmitted}'>
     <div class='menu__input-block'>
       <img :src='search' alt='' class='menu__input-img left'>
-      <input type='text' v-model='citySearch' class='menu__input'>
+      <input type='text' v-model='citySearch' class='menu__input' placeholder='Enter city name here'>
       <img :src='circle' alt='' class='menu__input-img right' @click='clear'>
     </div>
     <div class='menu__items-block ' v-if='citySearch'>
@@ -10,7 +10,7 @@
            :key='idx'
       >
         <div class='menu__items-search' @click='searchWeather(item)'>
-          {{ item.name.slice(0, item.index[0]) }}<span class='foo'
+          {{ item.name.slice(0, item.index[0]) }}<span class='menu__items-search-active'
                                                              >{{ item.name.slice(...item.index)
           }}</span>{{ item.name.slice(item.index[1], item.name[item.name.length]) }}
         </div>
@@ -92,7 +92,7 @@ export default {
         }
       })
       return bar
-    }
+    },
   },
   methods: {
     clear() {
@@ -103,7 +103,7 @@ export default {
         slug: city.name
       })
     }
-  }
+  },
 }
 </script>
 
@@ -199,6 +199,7 @@ export default {
   width: 95%
   padding: 10px 0
   border-bottom: 1px solid #fefefe
+  cursor: pointer
 
 
 
@@ -211,10 +212,8 @@ export default {
     display: none
 
 
-  .foo
+  .menu__items-search-active
     color: #fefefe
-    margin: 0
-    padding: 0
     display: inline-block
 
 
