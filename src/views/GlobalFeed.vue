@@ -1,31 +1,31 @@
 <template>
-    <div class="container">
-        <template>
-            <wtp-top-bar
-                :current-city="weatherCity"
-                @onResetWeather="getData"
-            />
-            <wtp-feed
-                :current-city="weatherCity"
-                :current-temp="weather.current"
-                :current-weather="weather.currentWeatherDescription"
-                :current-temp-max="weather.currentDayMax"
-                :current-temp-min="weather.currentDayMin"
-                :current-weather-icon="weather.currentWeatherIcon"
-            ></wtp-feed>
-            <wtp-footer :weather="weather.array" />
-        </template>
-    </div>
+  <div class='container'>
+    <template>
+      <wtp-top-bar
+          :current-city='weatherCity'
+          @onResetWeather='getData'
+      />
+      <wtp-feed
+          :current-city='weatherCity'
+          :current-temp='weather.current'
+          :current-weather='weather.currentWeatherDescription'
+          :current-temp-max='weather.currentDayMax'
+          :current-temp-min='weather.currentDayMin'
+          :current-weather-icon='weather.currentWeatherIcon'
+      ></wtp-feed>
+      <wtp-footer :weather='weather.array' />
+    </template>
+  </div>
 </template>
 
 <script>
 import {
-    actionTypes as weatherActionTypes,
-    getterTypes as weatherGetterTypes
+  actionTypes as weatherActionTypes,
+  getterTypes as weatherGetterTypes
 } from '@/store/modules/weather'
 import {
-    actionTypes as geolocationActionTypes,
-    getterTypes as geolocationGetterTypes
+  actionTypes as geolocationActionTypes,
+  getterTypes as geolocationGetterTypes
 } from '@/store/modules/geolocation'
 import {mapGetters, mapState} from 'vuex'
 import WtpFeed from '@/components/Feed'
@@ -33,54 +33,62 @@ import WtpTopBar from '@/components/TopBar'
 import WtpFooter from '@/components/Footer'
 
 export default {
-    name: 'WtpGlobalFeed',
-    components: {
-        WtpFooter,
-        WtpTopBar,
-        WtpFeed
+  name: 'WtpGlobalFeed',
+  components: {
+    WtpFooter,
+    WtpTopBar,
+    WtpFeed
+  },
+  computed: {
+    ...mapState({
+      weatherCity: state => state.weather.city,
+      isGettingLocation: state => state.geolocation.gettingLocation
+    }),
+    ...mapGetters({
+      location: geolocationGetterTypes.getterLocation,
+      weather: weatherGetterTypes.getWeatherFiltered
+    }),
+    checkCurrentCity() {
+      return this.weatherCity
     },
-    computed: {
-        ...mapState({
-            weatherCity: state => state.weather.city
-        }),
-        ...mapGetters({
-            location: geolocationGetterTypes.getterLocation,
-            weather: weatherGetterTypes.getWeatherFiltered
-        }),
-      checkCurrentCity() {
-          return this.weatherCity
+    checkLocation() {
+      if (this.isGettingLocation) {
+        return true
+      } else {
+        return false
       }
-    },
-    mounted() {
-        setTimeout(this.getData, 10)
-    },
-    created() {
-        this.$store.dispatch(geolocationActionTypes.getGeolocation)
-    },
-    // fix this watcher cuz 2-3 times render and this fix problem when user is asked for permission to use geodata
-    watch: {
-        checkLocation() {
-            this.getData()
-        },
-        checkCurrentCity() {
-          this.$router.push({name: 'Home', params: {slug: this.weatherCity}})
-        }
-    },
-    methods: {
-        async getData() {
-            this.$store
-                .dispatch(weatherActionTypes.getWeather, {
-                    lat: this.location.latitude,
-                    lon: this.location.longitude
-                })
-                .then(
-                    await this.$store.dispatch(weatherActionTypes.getCity, {
-                        lat: this.location.latitude,
-                        lon: this.location.longitude
-                    })
-                )
-        }
     }
+  },
+  mounted() {
+    setTimeout(this.getData, 10)
+  },
+  created() {
+    this.$store.dispatch(geolocationActionTypes.getGeolocation)
+  },
+  // fix this watcher cuz 2-3 times render and this fix problem when user is asked for permission to use geodata
+  watch: {
+    checkLocation() {
+      this.getData()
+    },
+    checkCurrentCity() {
+      this.$router.push({name: 'Home', params: {slug: this.weatherCity}})
+    }
+  },
+  methods: {
+    async getData() {
+      this.$store
+          .dispatch(weatherActionTypes.getWeather, {
+            lat: this.location.latitude,
+            lon: this.location.longitude
+          })
+          .then(
+              await this.$store.dispatch(weatherActionTypes.getCity, {
+                lat: this.location.latitude,
+                lon: this.location.longitude
+              })
+          )
+    }
+  }
 }
 </script>
 
