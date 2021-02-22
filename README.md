@@ -13,6 +13,10 @@ yarn global add @vue/cli @vue/cli-service-global
 ```
 yarn install
 ```
+### Or u can use npm 
+```
+npm install
+```
 
 ### Compiles and hot-reloads for development
 ```

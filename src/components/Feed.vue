@@ -90,6 +90,7 @@ export default {
     flex-direction: column
     width: 100%
     flex: 1 1 auto
+    backdrop-filter: blur(6.5rem)
 
 .main__item-temp
     display: block
