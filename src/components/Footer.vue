@@ -1,24 +1,6 @@
 <template>
     <div class="footer__wrapper">
-        <div class="footer__content">
-            <div class="footer__item" v-for="(item, idx) in weather" :key="idx">
-                <div class="footer_item_wrapper">
-                    <div class="footer__item-day">{{ item.date | date }}</div>
-                    <wtp-img-weather
-                        :weather-img="item.weatherIcon"
-                        class="footer__item-img"
-                    />
-                    <div>
-                        <span class="footer__item-temp-max">{{
-                            item.dayMax
-                        }}</span>
-                        <span class="footer__item-temp-min">{{
-                            item.dayMin
-                        }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <wtp-weather-banner :weather="weather" />
         <div class="footer__graph">
             <wtp-graph :graph="createArray" />
         </div>
@@ -27,11 +9,11 @@
 
 <script>
 import WtpGraph from '@/components/Graph'
-import WtpImgWeather from '@/components/ImgWeather'
+import WtpWeatherBanner from '@/components/WeatherBanner'
 
 export default {
     name: 'WtpFooter',
-    components: {WtpImgWeather, WtpGraph},
+    components: {WtpWeatherBanner, WtpGraph},
     props: {
         weather: {
             required: true
