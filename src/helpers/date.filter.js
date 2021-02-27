@@ -1,5 +1,5 @@
-import {format,  fromUnixTime} from "date-fns";
+import {format, fromUnixTime} from 'date-fns'
 
 export default date => {
-    return format(new Date(fromUnixTime(date)), 'E').toUpperCase();
-};
+    return format(new Date(fromUnixTime(date)), 'E').toUpperCase()
+}

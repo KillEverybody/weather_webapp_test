@@ -1,22 +1,28 @@
 <template>
-  <div class='footer__wrapper'>
-  <div class='footer__content'>
-    <div class='footer__item' v-for='(item, idx) in weather' :key='idx'>
-      <div class='footer_item_wrapper'>
-      <div class='footer__item-day'> {{ item.date | date }}</div>
-        <wtp-img-weather :weather-img='item.weatherIcon' class='footer__item-img' />
-      <div>
-        <span class='footer__item-temp-max'>{{ item.dayMax }}</span>
-        <span class='footer__item-temp-min'>{{ item.dayMin }}</span>
-      </div>
-      </div>
+    <div class="footer__wrapper">
+        <div class="footer__content">
+            <div class="footer__item" v-for="(item, idx) in weather" :key="idx">
+                <div class="footer_item_wrapper">
+                    <div class="footer__item-day">{{ item.date | date }}</div>
+                    <wtp-img-weather
+                        :weather-img="item.weatherIcon"
+                        class="footer__item-img"
+                    />
+                    <div>
+                        <span class="footer__item-temp-max">{{
+                            item.dayMax
+                        }}</span>
+                        <span class="footer__item-temp-min">{{
+                            item.dayMin
+                        }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__graph">
+            <wtp-graph :graph="createArray" />
+        </div>
     </div>
-
-  </div>
-  <div class='footer__graph'>
-      <wtp-graph :graph='createArray' />
-  </div>
-  </div>
 </template>
 
 <script>
@@ -24,27 +30,36 @@ import WtpGraph from '@/components/Graph'
 import WtpImgWeather from '@/components/ImgWeather'
 
 export default {
-  name: 'WtpFooter',
-  components: {WtpImgWeather, WtpGraph},
-  props: {
-    weather: {
-      required: true
-    }
-  },
+    name: 'WtpFooter',
+    components: {WtpImgWeather, WtpGraph},
+    props: {
+        weather: {
+            required: true
+        }
+    },
     computed: {
-      createArray() {
-          const weatherArray = Object.values(this.weather)
-        const filteredArray = []
-         weatherArray.forEach(el => {
-          Array.prototype.push.apply(filteredArray,[el.dayMax, el.dayMin])
-        })
+        createArray() {
+            const weatherArray = Object.values(this.weather)
+            const filteredArray = []
+            weatherArray.forEach(el => {
+                Array.prototype.push.apply(filteredArray, [
+                    el.dayMax,
+                    el.dayMin
+                ])
+            })
             return filteredArray
-      }
+        }
+    },
+    created() {
+        console.log('Created__Footer')
+    },
+    mounted() {
+        console.log('Mounted__Footer')
     }
 }
 </script>
 
-<style scoped lang='sass'>
+<style scoped lang="sass">
 .footer__content
     background-color: #4d555d
     display: flex
@@ -105,6 +120,4 @@ export default {
     display: flex
     flex-direction: column
     justify-content: space-between
-
-
 </style>

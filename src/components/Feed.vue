@@ -2,21 +2,25 @@
     <div class="feed">
         <div class="feed__upper">
             <div class="feed__upper-left">Day Forecast</div>
-            <div class='feed__upper-right'>
-                <span class='upper__right-item-max'> {{ currentTempMax }} </span>
-                <span class='upper__right-item-min'> {{ currentTempMin }} </span>
+            <div class="feed__upper-right">
+                <span class="upper__right-item-max">
+                    {{ currentTempMax }}
+                </span>
+                <span class="upper__right-item-min">
+                    {{ currentTempMin }}
+                </span>
             </div>
         </div>
-        <div class='feed__main'>
-            <span class='main__item-temp'>{{ currentTemp }}&deg; </span>
-            <span class='main__item-city'>{{ currentCity }}</span>
-            <div class='main__item-weather-block'>
-                <span class='main__item-weather-block-weather'>{{
+        <div class="feed__main">
+            <span class="main__item-temp">{{ currentTemp }}&deg; </span>
+            <span class="main__item-city">{{ currentCity }}</span>
+            <div class="main__item-weather-block">
+                <span class="main__item-weather-block-weather">{{
                     capitalizeCurrentWeather
                 }}</span>
                 <wtp-img-weather
                     :weather-img="currentWeatherIcon"
-                    class='main__item-weather-block-img'
+                    class="main__item-weather-block-img"
                 />
             </div>
         </div>
@@ -65,73 +69,78 @@ export default {
                 this.currentWeather.slice(1)
             )
         }
+    },
+    created() {
+        console.log('Created__Feed')
+    },
+    mounted() {
+        console.log('Mounted__Feed')
     }
 }
 </script>
 
 <style scoped lang="sass">
 .feed
-    min-height: 70%
-    display: flex
-    flex-direction: column
-    align-items: center
-    background-color: #4d555d
-    color: #fefefe
-    @media (min-height: 850px)
-        min-height: 75%
+  min-height: 70%
+  display: flex
+  flex-direction: column
+  align-items: center
+  background-color: #4d555d
+  color: #fefefe
+  @media (min-height: 850px)
+    min-height: 75%
 
 
 .feed__main
-    padding: 25px 40px 50px
-    text-align: center
-    display: flex
-    justify-content: center
-    align-items: center
-    flex-direction: column
-    width: 100%
-    flex: 1 1 auto
-    backdrop-filter: blur(6.5rem)
+  padding: 25px 40px 50px
+  text-align: center
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  width: 100%
+  flex: 1 1 auto
+  backdrop-filter: blur(6.5rem)
 
 .main__item-temp
-    display: block
-    font-size: 70px
-    margin-bottom: 15px
-    font-weight: 100
+  display: block
+  font-size: 70px
+  margin-bottom: 15px
+  font-weight: 100
 
 .main__item-city
-    display: block
-    font-size: 32px
-    font-weight: 400
+  display: block
+  font-size: 32px
+  font-weight: 400
 
 .main__item-weather-block
-    display: flex
-    align-items: center
-    justify-content: center
+  display: flex
+  align-items: center
+  justify-content: center
 
 .main__item-weather-block-img
-    height: 60px
-    width: 60px
+  height: 60px
+  width: 60px
 
 .feed__upper
-    box-sizing: border-box
-    background-color: #39424b
-    width: 100%
-    min-height: 35px
-    display: flex
-    align-items: center
-    justify-content: space-between
-    padding: 0 10px
+  box-sizing: border-box
+  background-color: #39424b
+  width: 100%
+  min-height: 35px
+  display: flex
+  align-items: center
+  justify-content: space-between
+  padding: 0 10px
 
 
 .upper__right-item-min
-    margin-left: 5px
-    color: #babcc0
+  margin-left: 5px
+  color: #babcc0
 
 
 .feed__bottom
-    background-color: #39424b
-    margin-top: auto
-    width: 100%
-    padding: 5px 0 5px 20px
-
+  background-color: #39424b
+  margin-top: auto
+  width: 100%
+  padding: 5px 0 5px 20px
 </style>

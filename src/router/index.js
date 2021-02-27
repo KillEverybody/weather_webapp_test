@@ -8,17 +8,17 @@ const routes = [
     {
         path: '/:slug',
         name: 'Home',
-         component: GlobalFeed
+        component: GlobalFeed
     },
     {
         path: '*',
-        redirect: { name: 'Home' }
+        redirect: {name: 'Home'}
     }
 ]
 const router = new VueRouter({
     // mode: 'history',
     // base: process.env.BASE_URL,
-    routes,
+    routes
 })
 
 export default router

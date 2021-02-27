@@ -24,8 +24,7 @@ export const getterTypes = {
 }
 
 const mutations = {
-    [mutationTypes.getGeolocationStart]() {
-    },
+    [mutationTypes.getGeolocationStart]() {},
     [mutationTypes.getGeolocationSuccess](state, payload) {
         state.location = payload
         state.gettingLocation = true
@@ -59,8 +58,8 @@ const actions = {
 }
 
 const getters = {
-    [getterTypes.getterLocation]: (state) => {
-         return state.location
+    [getterTypes.getterLocation]: state => {
+        return state.location
     }
 }
 

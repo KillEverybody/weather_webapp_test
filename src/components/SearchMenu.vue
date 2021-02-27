@@ -1,32 +1,52 @@
 <template>
-  <div class='menu' :class='{active: isSubmitted}'>
-    <div class='menu__input-block'>
-      <img :src='search' alt='' class='menu__input-img left'>
-      <input type='text' v-model='citySearch' class='menu__input' placeholder='Enter city name here'>
-      <img :src='circle' alt='' class='menu__input-img right' @click='clear'>
+    <div class="menu" :class="{active: isSubmitted}">
+        <div class="menu__input-block">
+            <img :src="search" alt="" class="menu__input-img left" />
+            <input
+                type="text"
+                v-model="citySearch"
+                class="menu__input"
+                placeholder="Enter city name here"
+            />
+            <img
+                :src="circle"
+                alt=""
+                class="menu__input-img right"
+                @click="clear"
+            />
+        </div>
+        <div class="menu__items-block " v-if="citySearch">
+            <div
+                class="menu__items"
+                v-for="(item, idx) in filterActive"
+                :key="idx"
+            >
+                <div class="menu__items-search" @click="searchWeather(item)">
+                    {{ item.name.slice(0, item.index[0])
+                    }}<span class="menu__items-search-active">{{
+                        item.name.slice(...item.index)
+                    }}</span
+                    >{{
+                        item.name.slice(
+                            item.index[1],
+                            item.name[item.name.length]
+                        )
+                    }}
+                </div>
+            </div>
+        </div>
+        <div class="menu__items-block " v-if="!citySearch">
+            <div
+                class="menu__items"
+                v-for="(item, idx) in sliceCity"
+                :key="idx"
+            >
+                <div class="menu__items-search" @click="searchWeather(item)">
+                    {{ item.name }}
+                </div>
+            </div>
+        </div>
     </div>
-    <div class='menu__items-block ' v-if='citySearch'>
-      <div class='menu__items' v-for='(item, idx) in filterActive'
-           :key='idx'
-      >
-        <div class='menu__items-search' @click='searchWeather(item)'>
-          {{ item.name.slice(0, item.index[0]) }}<span class='menu__items-search-active'
-                                                             >{{ item.name.slice(...item.index)
-          }}</span>{{ item.name.slice(item.index[1], item.name[item.name.length]) }}
-        </div>
-      </div>
-    </div>
-      <div class='menu__items-block ' v-if='!citySearch'>
-        <div class='menu__items' v-for='(item, idx) in sliceCity'
-             :key='idx'
-        >
-          <div class='menu__items-search' @click='searchWeather(item)'>
-            {{ item.name }}
-          </div>
-
-        </div>
-        </div>
-  </div>
 </template>
 
 <script>
@@ -36,78 +56,85 @@ import {actionTypes as weatherActionTypes} from '@/store/modules/weather'
 import jsonFile from '@/helpers/parse'
 import {mapState} from 'vuex'
 
-
 export default {
-  name: 'WtpSearchMenu',
-  data() {
-    return {
-      citySearch: '',
-      search,
-      circle,
-      jsonFile
-    }
-  },
-  props: {
-    isSubmitted: {
-      type: Boolean
-    }
-  },
-  computed: {
-    ...mapState({
-      coord: state => state.weather.coord,
-      currentCity: state => state.weather.city
-    }),
-    filterCity() {
-      let result = this.jsonFile
-      if (!this.citySearch) {
-        return result
-      }
-      const citySearch = this.citySearch.toLowerCase()
-      const filter = el => el.name.toLowerCase().includes(citySearch)
-      return result.filter(filter)
-    },
-    sliceCity() {
-      return this.filterCity.slice(0, 50)
-    },
-    filterActive() {
-      const bar = []
-      if (!this.citySearch) {
-        return this.sliceCity
-      }
-      this.sliceCity.forEach(location => {
-        location.index = []
-        const firstIndex = location.name.toLowerCase().indexOf(this.citySearch.toLowerCase())
-        if (firstIndex != -1) {
-          location.index.push(firstIndex)
-          if (this.citySearch.length > 1) {
-            location.index.push((this.citySearch.length) + firstIndex)
-          } else {
-            location.index.push(1 + firstIndex)
-          }
-        } else {
-          delete location.index
+    name: 'WtpSearchMenu',
+    data() {
+        return {
+            citySearch: '',
+            search,
+            circle,
+            jsonFile
         }
-        if (location.index) {
-          bar.push(location)
+    },
+    props: {
+        isSubmitted: {
+            type: Boolean
         }
-      })
-      return bar
     },
-  },
-  methods: {
-    clear() {
-      this.citySearch = ''
+    computed: {
+        ...mapState({
+            coord: state => state.weather.coord,
+            currentCity: state => state.weather.city
+        }),
+        filterCity() {
+            let result = this.jsonFile
+            if (!this.citySearch) {
+                return result
+            }
+            const citySearch = this.citySearch.toLowerCase()
+            const filter = el => el.name.toLowerCase().includes(citySearch)
+            return result.filter(filter)
+        },
+        sliceCity() {
+            return this.filterCity.slice(0, 50)
+        },
+        filterActive() {
+            const bar = []
+            if (!this.citySearch) {
+                return this.sliceCity
+            }
+            this.sliceCity.forEach(location => {
+                location.index = []
+                const firstIndex = location.name
+                    .toLowerCase()
+                    .indexOf(this.citySearch.toLowerCase())
+                if (firstIndex !== -1) {
+                    location.index.push(firstIndex)
+                    if (this.citySearch.length > 1) {
+                        location.index.push(this.citySearch.length + firstIndex)
+                    } else {
+                        location.index.push(1 + firstIndex)
+                    }
+                } else {
+                    delete location.index
+                }
+                if (location.index) {
+                    bar.push(location)
+                }
+            })
+            return bar
+        }
     },
-    searchWeather(city) {
-      this.$store.dispatch(weatherActionTypes.getCity, {
-        slug: city.name
-      })
+    methods: {
+        clear() {
+            this.citySearch = ''
+        },
+        searchWeather(city) {
+            this.$store.dispatch(weatherActionTypes.getCity, {
+                slug: city.name
+            })
+        }
+    },
+    created() {
+        console.log('Created__Search')
+    },
+    mounted() {
+        console.log('Mounted__Search')
     }
-  },
 }
 </script>
 
-<style scoped lang='sass'>
+<style scoped lang="sass">
 .menu
   display: flex
   align-items: center
@@ -134,7 +161,6 @@ export default {
     height: 67vh
 
 
-
 .active
   visibility: visible
   transform: translateY(0%)
@@ -147,7 +173,6 @@ export default {
   margin-top: 10px
 
 
-
 .menu__input
   width: 100%
   background-color: #4d555d
@@ -158,8 +183,6 @@ export default {
 
   &:focus
     background-color: #39424b
-
-
 
 
 .menu__input-img
@@ -181,7 +204,6 @@ export default {
     cursor: pointer
 
 
-
 .menu__items
   color: black
   width: 100%
@@ -194,13 +216,11 @@ export default {
     background-color: #39424b
 
 
-
 .menu__items-search
   width: 95%
   padding: 10px 0
   border-bottom: 1px solid #fefefe
   cursor: pointer
-
 
 
 .menu__items-block
@@ -215,6 +235,4 @@ export default {
   .menu__items-search-active
     color: #fefefe
     display: inline-block
-
-
 </style>

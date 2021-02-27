@@ -15,7 +15,7 @@ export const mutationTypes = {
 
     getCityStart: '[weather] Get city start',
     getCitySuccess: '[weather] Get city success',
-    getCityFailure: '[weather] Get city failure',
+    getCityFailure: '[weather] Get city failure'
 }
 
 export const actionTypes = {
@@ -24,7 +24,7 @@ export const actionTypes = {
 }
 
 export const getterTypes = {
-    getWeatherFiltered:'[weather]: Get weather filtered'
+    getWeatherFiltered: '[weather]: Get weather filtered'
 }
 
 const mutations = {
@@ -48,23 +48,22 @@ const mutations = {
         state.city = payload.name
         state.coord = payload.coord
     },
-    [mutationTypes.getCityFailure]() {
-    },
+    [mutationTypes.getCityFailure]() {}
 }
 
 const actions = {
     [actionTypes.getWeather](context, {lat, lon}) {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
             context.commit(mutationTypes.getWeatherStart)
             weatherApi
                 .getWeather(lat, lon)
-                .then((weather) => {
+                .then(weather => {
                     context.commit(mutationTypes.getWeatherSuccess, weather)
                     resolve(weather)
                 })
-                .catch((err) => {
+                .catch(err => {
                     context.commit(mutationTypes.getWeatherFailure)
-                        console.log(err)
+                    console.log(err)
                 })
         })
     },
@@ -72,50 +71,54 @@ const actions = {
         return new Promise(resolve => {
             context.commit(mutationTypes.getCityStart)
             if (!slug) {
-            weatherApi
-                .getCity(lat,lon)
-                .then(response => {
-                    context.commit(mutationTypes.getCitySuccess, response)
-                    resolve(response)
-                })
-                .catch(err => {
-                    context.commit(mutationTypes.getWeatherFailure)
-                    console.log(err)
-                }) } else
-            {
                 weatherApi
-            .getCityByName(slug)
-                .then(response => {
-                    context.commit(mutationTypes.getCitySuccess, response)
-                    resolve(response)
-                    weatherApi
-                        .getWeather(response.coord.lat,response.coord.lon)
-                        .then((weather) => {
-                            context.commit(mutationTypes.getWeatherSuccess, weather)
-                            resolve(weather)
-                        })
-                        .catch((err) => {
-                            context.commit(mutationTypes.getWeatherFailure)
-                            console.log(err)
-                        })
-                })
-                .catch(err => {
-                    context.commit(mutationTypes.getWeatherFailure)
-                    console.log(err)
-                })
+                    .getCity(lat, lon)
+                    .then(response => {
+                        context.commit(mutationTypes.getCitySuccess, response)
+                        resolve(response)
+                    })
+                    .catch(err => {
+                        context.commit(mutationTypes.getWeatherFailure)
+                        console.log(err)
+                    })
+            } else {
+                weatherApi
+                    .getCityByName(slug)
+                    .then(response => {
+                        context.commit(mutationTypes.getCitySuccess, response)
+                        resolve(response)
+                        weatherApi
+                            .getWeather(response.coord.lat, response.coord.lon)
+                            .then(weather => {
+                                context.commit(
+                                    mutationTypes.getWeatherSuccess,
+                                    weather
+                                )
+                                resolve(weather)
+                            })
+                            .catch(err => {
+                                context.commit(mutationTypes.getWeatherFailure)
+                                console.log(err)
+                            })
+                    })
+                    .catch(err => {
+                        context.commit(mutationTypes.getWeatherFailure)
+                        console.log(err)
+                    })
             }
         })
     }
 }
 
 const getters = {
-    [getterTypes.getWeatherFiltered]: (state) => {
+    [getterTypes.getWeatherFiltered]: state => {
         return {
-            currentWeatherDescription: state.data?.current.weather[0].description,
+            currentWeatherDescription:
+                state.data?.current.weather[0].description,
             currentWeatherIcon: state.data?.current.weather[0].icon,
             current: state.data?.current.temp.toFixed(),
-                currentDayMin: state.data?.daily[0].temp.min.toFixed(),
-                currentDayMax: state.data?.daily[0].temp.max.toFixed(),
+            currentDayMin: state.data?.daily[0].temp.min.toFixed(),
+            currentDayMax: state.data?.daily[0].temp.max.toFixed(),
             array: {
                 0: {
                     dayMin: state.data?.daily[1].temp.min.toFixed(),
@@ -159,7 +162,7 @@ const getters = {
                     weatherIcon: state.data?.daily[7].weather[0].icon,
                     date: state.data?.daily[7].dt
                 }
-            },
+            }
         }
     }
 }
